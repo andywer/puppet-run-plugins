@@ -26,12 +26,16 @@ export async function resolveBundleEntrypoints (scriptArgs: string[]): Promise<s
   const sourceGlobs = scriptArgs.filter(arg => !arg.startsWith("-"))
 
   const resolvedSourceGlobs = await Promise.all(
-    sourceGlobs.map(sourceGlob => glob(sourceGlob))
+    sourceGlobs.map(sourceGlob => glob(sourceGlob + "?(.js|.jsx|.ts|.tsx)"))
   )
   const sourcePaths = resolvedSourceGlobs.reduce(
     (flattened, paths) => flattened.concat(paths),
     []
   )
+
+  if (sourcePaths.length === 0) {
+    throw new Error(`The provided arguments do not match any file: ${sourceGlobs}`)
+  }
 
   return [
     require.resolve("./client/before"),
