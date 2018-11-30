@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es2015", "es2016"],
+    "strict": true,
+    "baseUrl": ".",
+    "outDir": "dist/",
+    "rootDir": "src/",
+    "paths": {
+      "*": [
+        "./node_modules/*",
+        "../../node_modules/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "../../types/*.d.ts"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "puppet-run-plugins",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "postinstall": "link-parent-bin",
+    "build": "lerna run --parallel build",
+    "test": "lerna run --parallel test"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.5.1",
+    "link-parent-bin": "^0.2.3",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.2"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 120
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
