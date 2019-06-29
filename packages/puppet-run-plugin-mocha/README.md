@@ -2,12 +2,12 @@
 
 Allows effortlessly running [Mocha](https://mochajs.org) tests in the browser using [puppet-run](https://github.com/andywer/puppet-run).
 
-
 ## Usage
 
 ```
 Usage
-  $ puppet-run plugin:mocha path/to/*.test.js [...options]
+  $ puppet-run --plugin=mocha path/to/*.test.js
+  $ puppet-run --plugin=mocha path/to/*.test.js -- <...options>
 
 Options
   --help            Print this help.

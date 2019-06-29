@@ -22,25 +22,28 @@ export const help = () => `
     https://mochajs.org/
 `
 
-export async function resolveBundleEntrypoints (scriptArgs: string[]): Promise<string[]> {
-  const sourceGlobs = scriptArgs.filter(arg => !arg.startsWith("-"))
+export async function resolveBundleEntrypoints(entrypoints: PuppetRunEntrypoint[]): Promise<PuppetRunEntrypoint[]> {
+  let resolvedEntrypoints: PuppetRunEntrypoint[] = []
 
-  const resolvedSourceGlobs = await Promise.all(
-    sourceGlobs.map(sourceGlob => glob(sourceGlob + "?(.js|.jsx|.ts|.tsx)"))
-  )
-  const sourcePaths = resolvedSourceGlobs.reduce(
-    (flattened, paths) => flattened.concat(paths),
-    []
-  )
+  for (const entry of entrypoints) {
+    if (!entry.servePath) {
+      const resolvedPaths = await glob(entry.sourcePath)
+      resolvedEntrypoints = resolvedEntrypoints.concat(
+        resolvedPaths.map(resolvedPath => ({ sourcePath: resolvedPath }))
+      )
+    } else {
+      resolvedEntrypoints.push(entry)
+    }
+  }
 
-  if (sourcePaths.length === 0) {
-    throw new Error(`The provided arguments do not match any file: ${sourceGlobs}`)
+  if (resolvedEntrypoints.length === 0) {
+    throw new Error(`The provided arguments do not match any file: ${entrypoints.map(entry => entry.sourcePath)}`)
   }
 
   return [
-    require.resolve("./client/before"),
-    ...sourcePaths,
-    require.resolve("./client/after")
+    { sourcePath: require.resolve("./client/before") },
+    ...resolvedEntrypoints,
+    { sourcePath: require.resolve("./client/after") }
   ]
 }
 
