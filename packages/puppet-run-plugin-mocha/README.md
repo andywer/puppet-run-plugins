@@ -1,13 +1,13 @@
 # Mocha Plugin
 
-Allows effortlessly running [Mocha](https://mochajs.org) tests in the browser using [puppet-run](https://github.com/andywer/puppet-run).
+Allows running [Mocha](https://mochajs.org) tests in a headless browser using [puppet-run](https://github.com/andywer/puppet-run). Supports JavaScript and TypeScript without any additional configuration.
 
 
 ## Usage
 
 ```
 Usage
-  $ puppet-run plugin:mocha path/to/*.test.js [...options]
+  $ puppet-run --plugin=mocha ./test/*.test.js [...options]
 
 Options
   --help            Print this help.
